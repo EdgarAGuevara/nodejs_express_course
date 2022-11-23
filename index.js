@@ -5,21 +5,23 @@ const routerApi = require('./routes');
 const { logError, errorHandler, boomErrorHandler } = require('./middlerwares/errorsHandler');
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
+const PROJECT_ID = process.env.GOOGLE_CLOUD_PROJECT || 'performance-centec.';
+const REGION_ID = 'uk';
 
 app.use(express.json());
-//app.use(cors);// in this way we can accept every domain.
-const whitelist = ['http://localhost', 'https://myapp.co']; //for example
-const options = {
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('No permitido'));
-    }
-  }
-}
-app.use(cors(options));
+// app.use(cors);// in this way we can accept every domain.
+// const whitelist = ['http://localhost', 'https://myapp.co',`https://${PROJECT_ID}.${REGION_ID}.r.appspot.com`]; //for example
+// const options = {
+//   origin: (origin, callback) => {
+//     if (whitelist.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('No permitido'));
+//     }
+//   }
+// }
+// app.use(cors(options));
 
 app.get('/', (req, res) => {
   res.send('From EAG Store');
@@ -36,6 +38,6 @@ app.use(logError);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log("LISTEN ON ", port);
+app.listen(PORT, () => {
+  console.log("LISTEN ON ", PORT);
 });

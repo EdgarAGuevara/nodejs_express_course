@@ -34,9 +34,7 @@ class ProductsService {
   async find() {
     /*eslint no-unused-vars: ["error", { "args": "none" }]*/
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(this.products);
-      }, 5000);
+      resolve(this.products);
     });
   }
 
